@@ -70,7 +70,7 @@ equal.className="equal";
 dot =document.createElement('p');
 dot.textContent=".";
 //css calculatorcontainer
-calcultorContainer.style.width= "53vw";
+calcultorContainer.style.width= "90vw";
 calcultorContainer.style.borderRadius ="5px";
 calcultorContainer.style.border ="3px solid #dadce0";
 calcultorContainer.style.padding ="20px";
@@ -107,13 +107,43 @@ for (let op of gridcontainer.children) {
         op.className+=" key";// affect the class "key" to all the keys
   }
 // event listners
-num1.addEventListener("click", function() {
-    screen.textContent += "1";
-  });
+function isExpressionValid(expression) {
+    try {
+      eval(expression);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
   for (let op of gridcontainer.children) {
-    op.addEventListener("click", function() {
-        screen.textContent += op.textContent;
-      });
+    if(op.textContent=="AC"){
+        op.addEventListener("click", function() {
+            screen.textContent="";
+          });}
+    else if(op.textContent=="x"){
+            op.addEventListener("click", function() {
+                screen.textContent += "*";
+              });
+
+    }else if(op.textContent=="="){
+        op.addEventListener("click", function() {
+            if(!isExpressionValid(screen.textContent)){
+                screen.textContent = "ERROR";
+               
+            }else{
+                screen.textContent = eval(screen.textContent).toString();
+               
+            }
+        });
+   
+    }
+    else{
+        op.addEventListener("click", function() {
+            screen.textContent += op.textContent;
+            console.log(screen.textContent );
+          });
+    }
+ 
   }
 
 //css screen 
@@ -125,6 +155,9 @@ screen.style.textAlign="right";
 screen.style.fontSize="40px";
 screen.style.borderRadius ="5px";
 screen.style.border ="3px solid #dadce0";
+// css main
+main.style.display="flex";
+main.style.justifyContent="center";
 //affect to main
 calcultorContainer.appendChild(screen);
 calcultorContainer.appendChild(gridcontainer);

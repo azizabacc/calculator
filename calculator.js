@@ -115,6 +115,10 @@ function isExpressionValid(expression) {
       return false;
     }
   }
+
+function computeResult(str){
+    return Function('return ' + str)()
+  }
   for (let op of gridcontainer.children) {
     if(op.textContent=="AC"){
         op.addEventListener("click", function() {
@@ -131,7 +135,7 @@ function isExpressionValid(expression) {
                 screen.textContent = "ERROR";
                
             }else{
-                screen.textContent = eval(screen.textContent).toString();
+                screen.textContent = computeResult(screen.textContent);
                
             }
         });
